@@ -1,6 +1,6 @@
  Tkiter
  pyttsx3 
- speech_recognition as sr 
+ speech_recognition
  datetime
  wikipedia 	
  webbrowser

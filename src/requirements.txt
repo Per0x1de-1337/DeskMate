@@ -1,9 +1,5 @@
- Tkiter
- pyttsx3 
- speech_recognition
- datetime
- wikipedia 	
- webbrowser
- os
- openai
- cv2
+pyttsx3
+SpeechRecognition
+wikipedia
+openai
+opencv-python

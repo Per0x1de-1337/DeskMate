@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  assistant:
+    build: .
+    container_name: gemini-assistant
+    ipc: host
+    env_file:
+      - .env
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      # Connect to the host's X11 server for GUI display
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # --- THIS IS THE FIX ---
+      # Mount the entire current project directory to /app
+      # This makes your local code available inside the container
+      # and ensures any output files are saved directly to your project folder.
+      - .:/app
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/video0:/dev/video0
+    group_add:
+      - audio
+      - video

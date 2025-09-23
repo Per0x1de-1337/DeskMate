@@ -1,5 +1,5 @@
 pyttsx3
 SpeechRecognition
 wikipedia
-openai
+google-generativeai
 opencv-python

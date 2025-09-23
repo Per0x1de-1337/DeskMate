@@ -1,185 +1,162 @@
-# DeskMate
+# DeskMate-AI: Your Personal Desktop Assistant
 
-A versatile, voice-activated desktop assistant built with Python and containerized with Docker. This application provides a conversational interface to perform various tasks using Google's Gemini Pro AI, all accessible through a clean Tkinter GUI or voice commands.
+![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Docker](https://img.shields.io/badge/docker-ready-blue.svg)
 
+A versatile, voice-activated desktop assistant built with Python and containerized with Docker. This application provides a conversational interface to perform various tasks using Google's Gemini AI, all accessible through a clean Tkinter GUI or voice commands.
 
-![alt text](image.png)
+![DeskMate-AI Screenshot](image.png)
 
 ---
 
 ## ✨ Features
 
--   **Conversational AI:** Utilizes Google's Gemini 1.5 Pro model for intelligent, context-aware conversations.
--   **Containerized & Reproducible:** Runs in a Docker container for a consistent environment, eliminating "it works on my machine" issues.
--   **Dual Input Methods:** Interact via the Tkinter GUI or hands-free with voice commands.
--   **Web & Information Access:** Search Wikipedia, open Google/YouTube, or perform specific searches.
--   **System & File Operations:** Create folders and text files directly from a command.
--   **Hardware Integration:** Capture photos and record short video clips using your webcam and microphone.
--   **User-Friendly Interface:** Clean GUI with a real-time chat history and status updates.
--   **Persistent Output:** All created files (logs, photos, videos) are saved directly to your host machine.
+-   **🤖 Intelligent Conversations:** Powered by Google's `gemini-2.0-flash-exp` model for smart, context-aware interactions.
+-   **🗣️ Dual Input:** Interact via a clean Tkinter GUI or go hands-free with voice commands.
+-   **🌐 Web & Info Access:** Instantly search Wikipedia, Google, or YouTube.
+-   **📂 File System Operations:** Create folders and text files on your desktop with simple commands.
+-   **📸 Media Capture:** Capture photos and record short video clips using your webcam.
+-   **🐳 Dockerized:** Runs in a consistent and isolated Docker container, eliminating dependency hell.
+-   **📝 Persistent Output:** All created files (logs, photos, videos) are saved directly to your host machine for easy access.
 
 ---
 
-## 🛠️ Core Technologies
+## 🛠️ Tech Stack
 
--   **Containerization:** Docker, Docker Compose
--   **Backend:** Python 3.9+
--   **AI Engine:** Google Generative AI SDK (`google-generativeai`)
--   **GUI:** Tkinter
--   **Speech-to-Text:** `SpeechRecognition`
--   **Text-to-Speech:** `pyttsx3`
--   **Camera Control:** `OpenCV-Python`
+| Category          | Technology                                           |
+| ----------------- | ---------------------------------------------------- |
+| **Containerization** | Docker, Docker Compose                               |
+| **Backend**       | Python 3.9+                                          |
+| **AI Engine**     | Google Generative AI SDK (`google-generativeai`)     |
+| **GUI**           | Tkinter                                              |
+| **Speech-to-Text**| `SpeechRecognition`                                  |
+| **Text-to-Speech**| `pyttsx3`                                            |
+| **Camera/Video**  | `OpenCV-Python`                                      |
 
 ---
 
-## 🚀 Getting Started with Docker (Recommended)
+## 🚀 Getting Started
 
-This method is the easiest way to run the assistant, especially on **Linux**. It automatically handles all Python and system dependencies inside a container.
+You can run DeskMate-AI using Docker (recommended for ease of use) or in a local Python environment.
 
-### Prerequisites
+### Method 1: Docker (Recommended)
+
+This is the easiest way to run the assistant, especially on **Linux**. It handles all system and Python dependencies for you.
+
+#### Prerequisites
 
 -   Git
--   [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
--   A working microphone and webcam
--   **An X11-based Linux distribution** (e.g., Ubuntu, Fedora, Arch). *Running GUI apps from Docker on Windows/macOS is more complex and requires an X Server like VcXsrv or XQuartz.*
+-   [Docker](https://docs.docker.com/get-docker/) & [Docker Compose](https://docs.docker.com/compose/install/)
+-   A working microphone and webcam.
+-   An X11-based Linux distribution (e.g., Ubuntu, Fedora).
 
-### Step 1: Clone the Repository
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/gemini-desktop-assistant.git
 cd gemini-desktop-assistant
 ```
 
-### Step 2: Get Your Google API Key
+#### 2. Set Up Your Google API Key
 
-1.  Go to **[Google AI Studio](https://aistudio.google.com/)**.
-2.  Click on **"Get API key"** and **"Create API key in new project"**.
-3.  Copy the generated API key.
+1.  Obtain your API key from **[Google AI Studio](https://aistudio.google.com/)**.
+2.  Create a file named `.env` in the project's root directory.
+3.  Add your API key to the `.env` file like this:
 
-### Step 3: Create the `.env` File
+    ```env
+    # .env
+    GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+    ```
+    > The `.gitignore` file is already configured to ignore `.env`, so your key will remain private.
 
-Create a file named `.env` in the project's root directory. This file will securely store your API key.
+#### 3. Prepare Your Host (Linux Only)
 
-```
-# .env file
-GOOGLE_API_KEY="YOUR_API_KEY_HERE"
-```
-**Important:** The `.gitignore` file is already configured to ignore `.env`, ensuring your key is not committed to Git.
-
-### Step 4: Prepare Your Host (Linux Only)
-
-To allow the Docker container to display its GUI on your screen, you need to grant it access to your host's X11 server. Open a terminal and run:
+To allow the Docker container to display its GUI on your screen, run this command in your terminal:
 
 ```bash
 xhost +local:
 ```
-> This command temporarily allows local connections to the display server. You can revert this change after closing the application by running `xhost -local:`.
+> This command grants local connections to your display server. You can revert it with `xhost -local:`.
 
-### Step 5: Build and Run!
+#### 4. Build and Run
 
-With Docker running, use Docker Compose to build the image and start the assistant with a single command:
+With Docker running, use this single command to build the image and start the assistant:
 
 ```bash
 docker-compose up --build
 ```
 
--   `--build`: This tells Docker to build the image from the `Dockerfile` the first time or if you change dependencies.
--   The GUI window should appear on your desktop. Any files created (photos, videos, logs) will be saved directly in your project folder on your host machine.
-
-### Stopping the Assistant
-
--   To stop the application, press `Ctrl + C` in the terminal where Docker Compose is running.
--   To remove the container and clean up, run: `docker-compose down`.
-
----
-
-## ▶️ Running the Assistant
-
-Choose one of the following methods.
-
-### Method 1: Using Docker (Recommended)
-Follow the "Getting Started with Docker" instructions above. The final command to run the application is:
-```bash
-docker-compose up
-```
+The DeskMate-AI GUI should appear on your desktop. To stop it, press `Ctrl + C` in the terminal.
 
 ### Method 2: Local Python Environment
-<details>
-  <summary>Click to expand instructions for running with a local Python setup.</summary>
-  
-  ### 1. Prerequisites
-  - Python 3.8+
-  - A virtual environment tool (`venv`)
-  - System dependencies for `pyttsx3` (`espeak`) and `PyAudio` (`portaudio19-dev` on Debian/Ubuntu).
 
-  ### 2. Set Up Virtual Environment
-  ```bash
-  # Create the virtual environment
-  python -m venv venv
+#### 1. Prerequisites
 
-  # Activate it
-  # On Windows: venv\Scripts\activate
-  # On macOS/Linux: source venv/bin/activate
-  ```
+-   Python 3.9+
+-   A virtual environment tool (e.g., `venv`).
+-   System packages for audio and speech:
+    -   **Debian/Ubuntu:** `sudo apt-get install portaudio19-dev espeak`
+    -   *(Check your OS documentation for equivalent packages)*
 
-  ### 3. Install Dependencies
-  Make sure you have a `requirements.txt` file, then run:
-  ```bash
-  pip install -r requirements.txt
-  ```
+#### 2. Set Up Virtual Environment
 
-  ### 4. Set Environment Variable
-  You must set your API key as an environment variable.
-  
-  **On macOS/Linux:**
-  ```bash
-  export GOOGLE_API_KEY="YOUR_API_KEY_HERE"
-  ```
-  
-  **On Windows (Command Prompt):**
-  ```cmd
-  setx GOOGLE_API_KEY "YOUR_API_KEY_HERE"
-  ```
-  *(You must close and reopen the terminal for the change to take effect.)*
-
-  ### 5. Run the Application
-  ```bash
-  python Desktop_assistant.py
-  ```
-</details>
-
----
-
-## 📁 Project Structure
-
+```bash
+# Create and activate the virtual environment
+python -m venv venv
+source venv/bin/activate  # On macOS/Linux
+# venv\Scripts\activate  # On Windows
 ```
-.
-├── Desktop_assistant.py  # Main application logic
-├── Dockerfile            # Instructions to build the container image
-├── docker-compose.yml    # Configures and runs the Docker service
-├── .env                  # (You create this) Stores your secret API key
-├── requirements.txt      # Lists Python dependencies
-└── ...
+
+#### 3. Install Dependencies
+
+```bash
+# Navigate to the src directory
+cd src
+# Install the required packages
+pip install -r requirements.txt
+```
+
+#### 4. Set Environment Variable
+
+You must set your API key as an environment variable.
+
+-   **macOS/Linux:** `export GOOGLE_API_KEY="YOUR_API_KEY_HERE"`
+-   **Windows (CMD):** `setx GOOGLE_API_KEY "YOUR_API_KEY_HERE"` (requires new terminal)
+
+#### 5. Run the Application
+
+```bash
+# From the src directory
+python Desktop_assistant.py
 ```
 
 ---
+
 ## 🗣️ Available Commands
 
-| Command                               | Action                                                         |
-| ------------------------------------- | -------------------------------------------------------------- |
-| `wikipedia [topic]`                   | Searches Wikipedia and reads a summary of the topic.           |
-| `open google` / `open youtube`        | Opens the respective website in your browser.                  |
-| `search google [query]`               | Performs a Google search for the given query.                  |
-| `search youtube [query]`              | Performs a YouTube search for the given query.                 |
-| `what time is it?`                    | Tells you the current time.                                    |
-| `what is the date?`                   | Tells you the current date.                                    |
-| `make folder [name]`                  | Creates a new folder with the specified name.                  |
-| `create file [content]`               | Creates a new .txt file with the specified content.            |
-| `capture photo` / `take photo`        | Captures a photo using your webcam.                            |
-| `record video`                        | Records a 10-second video clip from your webcam.               |
-| `tell me a joke`                      | Tells a random joke.                                           |
-| `help` / `commands`                   | Displays a list of available commands.                         |
-| *(any other query)*                   | The query will be sent to the Gemini AI for a response.        |
+| Command                  | Action                                            |
+| ------------------------ | ------------------------------------------------- |
+| `wikipedia [topic]`      | Searches Wikipedia and reads a summary.           |
+| `open google/youtube`    | Opens the respective website.                     |
+| `search google [query]`  | Performs a Google search.                         |
+| `search youtube [query]` | Performs a YouTube search.                        |
+| `what time is it?`       | Tells you the current time.                       |
+| `what is the date?`      | Tells you the current date.                       |
+| `make folder [name]`     | Creates a folder on your desktop.                 |
+| `create file [content]`  | Creates a text file with the specified content.   |
+| `capture photo`          | Takes a photo with your webcam.                   |
+| `record video`           | Records a 10-second video clip.                   |
+| `tell me a joke`         | Tells a random joke.                              |
+| `help` / `commands`      | Displays the list of available commands.          |
+| *(any other query)*      | The query is sent to the Gemini AI for a response.|
+
+---
+
+## ⚠️ Known Issues & Limitations
+
+-   **GUI on Windows/macOS with Docker:** Running GUI applications from Docker on Windows and macOS is complex and requires an X Server (e.g., VcXsrv or XQuartz). The provided Docker setup is optimized for Linux.
+-   **Hardcoded Video Length:** Video recordings are currently fixed at a 10-second duration.
 
 ---
 
@@ -188,7 +165,7 @@ docker-compose up
 Contributions are welcome! If you have ideas for new features or improvements, please fork the repository and open a pull request.
 
 1.  Fork the repository.
-2.  Create a feature branch (`git checkout -b feature/AmazingFeature`).
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`).
 3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
 4.  Push to the branch (`git push origin feature/AmazingFeature`).
 5.  Open a Pull Request.
@@ -197,4 +174,4 @@ Contributions are welcome! If you have ideas for new features or improvements, p
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
